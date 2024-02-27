@@ -87,3 +87,71 @@ If we can write a function, that takes the state below as an input and creates t
 
 This is a state
 ```
+
+```
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <input type="text" placeholder="title" id="title" />
+    <br />
+    <br />
+    <input type="text" placeholder="Description" id="description" />
+    <br />
+    <br />
+    <div id="todos"></div>
+
+    <script>
+      let globalID = 1;
+      function markAsDone(todoID) {
+        const parent = document.getElementById(todoID);
+        parent.children[2].innerHTML = 'Done';
+      }
+
+      function createChild(title, description, id) {
+        const child = document.createElement('div');
+        const firstGrandChild = document.createElement('div');
+        firstGrandChild.innerHTML = title;
+        const secondGrandChild = document.createElement('div');
+        secondGrandChild.innerHTML = description;
+        const thirdGrandChild = document.createElement('button');
+        thirdGrandChild.innerHTML = 'Mark as done';
+        thirdGrandChild.setAttribute('onclick', `markAsDone(${id})`);
+        child.appendChild(firstGrandChild);
+        child.appendChild(secondGrandChild);
+        child.appendChild(thirdGrandChild);
+        child.setAttribute('id', id);
+        return child;
+      }
+
+      // State will always be an array
+      // Every element of state would have a title, description & id
+
+      function updateDomAccToState(state) {
+        const parent = document.getElementById('todos');
+        parent.innerHTML = '';
+        for (let i = 0; i < state.length; i++) {
+          const child = createChild(
+            state[i].title,
+            state[i].description,
+            state[i].id
+          );
+          parent.appendChild(child);
+        }
+      }
+
+      window.setInterval(async function () {
+        const res = await fetch('https://sum-server.100xdevs.com/todos');
+        const json = await res.json();
+
+        updateDomAccToState(json.todos);
+      }, 5000);
+    </script>
+  </body>
+</html>
+```
