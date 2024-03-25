@@ -26,6 +26,8 @@ app.get('/health-checkup', function (req, res, next) {
 
 app.listen(3000);
 ```
+<img width="892" alt="Screenshot 2024-03-25 at 10 36 26 AM" src="https://github.com/sum1t-here/cohort2.0/assets/126807055/165c6208-3c08-47da-b322-e2503c33611a">
+
 
 ## Using middleware to validate
 
@@ -84,3 +86,10 @@ app.post('/health-checkup', function (req, res, next) {
 
 app.listen(3000);
 ```
+- not passing values
+  
+<img width="892" alt="Screenshot 2024-03-25 at 12 37 04 PM" src="https://github.com/sum1t-here/cohort2.0/assets/126807055/675585b9-0e80-4646-be69-6f9468b2c1c9">
+
+- passing required values
+
+<img width="892" alt="Screenshot 2024-03-25 at 12 38 49 PM" src="https://github.com/sum1t-here/cohort2.0/assets/126807055/40b374fc-d4b2-4e90-bc2f-a5cc964798e7">
