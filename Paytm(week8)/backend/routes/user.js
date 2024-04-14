@@ -121,37 +121,38 @@ router.put('/', authMiddleware, async (req, res) => {
   res.json({
     message: 'Updated successfully',
   });
+});
 
-  router.get('/bulk', async (req, res) => {
-    // Extract the 'filter' query parameter from the request URL, or set it to an empty string if not provided
-    const filter = req.query.filter || '';
-    // Use Mongoose's User model to find users that match the specified criteria
-    const users = await User.find({
-      $or: [
-        {
-          // Match users with firstName that contains the filter value
-          firstName: {
-            $regex: filter,
-          },
+router.get('/bulk', async (req, res) => {
+  // Extract the 'filter' query parameter from the request URL, or set it to an empty string if not provided
+  const filter = req.query.filter || '';
+  // Use Mongoose's User model to find users that match the specified criteria
+  const users = await User.find({
+    $or: [
+      {
+        // Match users with firstName that contains the filter value
+        firstName: {
+          $regex: filter,
         },
-        // Match users with lastName that contains the filter value
-        {
-          lastName: {
-            $regex: filter,
-          },
+      },
+      // Match users with lastName that contains the filter value
+      {
+        lastName: {
+          $regex: filter,
         },
-      ],
-    });
+      },
+    ],
+  });
 
-    // Respond with a JSON object containing user data
-    res.json({
-      user: users.map((user) => ({
-        username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        _id: user._id,
-      })),
-    });
+  // Respond with a JSON object containing user data
+  res.json({
+    user: users.map((user) => ({
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      _id: user._id,
+    })),
   });
 });
+
 module.exports = router;
