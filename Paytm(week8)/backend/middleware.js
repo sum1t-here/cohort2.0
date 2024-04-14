@@ -1,4 +1,4 @@
-const { JWT_SECRET } = require('./config.js');
+const JWT_SECRET = require('./config');
 const jwt = require('jsonwebtoken');
 
 const authMiddleware = (req, res, next) => {
@@ -13,10 +13,7 @@ const authMiddleware = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
 
-    if (decoded.userId) {
-      req.userId = decoded.userId;
-      next();
-    }
+    req.userId = decoded.userId;
 
     next();
   } catch (err) {
